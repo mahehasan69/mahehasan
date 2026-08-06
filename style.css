@@ -224,3 +224,239 @@ section h2{
 }
 
 }
+/* ==========================================
+            PREMIUM HERO SECTION
+========================================== */
+
+.hero{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:60px;
+    min-height:85vh;
+}
+
+.hero-left{
+    flex:1;
+}
+
+.hero-right{
+    flex:1;
+    display:flex;
+    justify-content:center;
+}
+
+.hero-left h4{
+    font-size:22px;
+    color:#60a5fa;
+    margin-bottom:15px;
+}
+
+.hero-left h1{
+    font-size:62px;
+    margin-bottom:10px;
+    line-height:1.1;
+}
+
+.hero-left h2{
+    font-size:30px;
+    color:#3b82f6;
+    min-height:40px;
+    margin-bottom:20px;
+}
+
+.hero-left p{
+    font-size:18px;
+    max-width:600px;
+    margin-bottom:30px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:15px;
+    flex-wrap:wrap;
+    margin-bottom:30px;
+}
+
+.secondary{
+    background:white;
+    color:#2563eb;
+    border:2px solid #2563eb;
+}
+
+.secondary:hover{
+    background:#2563eb;
+    color:white;
+}
+
+.socials{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+}
+
+.socials a{
+    color:#3b82f6;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.socials a:hover{
+    color:#1d4ed8;
+}
+
+/* ==========================================
+            PROFILE IMAGE
+========================================== */
+
+.hero-right img{
+
+    width:340px;
+    height:340px;
+
+    border-radius:50%;
+
+    object-fit:cover;
+
+    border:8px solid white;
+
+    box-shadow:
+        0 0 30px rgba(37,99,235,.25);
+
+    transition:.4s;
+}
+
+.hero-right img:hover{
+
+    transform:scale(1.05);
+
+    box-shadow:
+        0 0 50px rgba(37,99,235,.45);
+
+}
+
+/* ==========================================
+            THEME BUTTON
+========================================== */
+
+#themeToggle{
+
+    position:fixed;
+
+    top:20px;
+
+    right:20px;
+
+    width:50px;
+
+    height:50px;
+
+    border:none;
+
+    border-radius:50%;
+
+    cursor:pointer;
+
+    font-size:20px;
+
+    background:#2563eb;
+
+    color:white;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+    z-index:999;
+}
+
+/* ==========================================
+            DARK MODE
+========================================== */
+
+body.dark-mode{
+
+    background:#0f172a;
+
+    color:white;
+
+}
+
+body.dark-mode section{
+
+    background:#0f172a;
+
+}
+
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode p{
+
+    color:white;
+
+}
+
+body.dark-mode .card,
+body.dark-mode .project{
+
+    background:#1e293b;
+
+    color:white;
+
+}
+
+body.dark-mode .secondary{
+
+    background:transparent;
+
+    color:white;
+
+    border:2px solid white;
+
+}
+
+body.dark-mode .secondary:hover{
+
+    background:white;
+
+    color:#111827;
+
+}
+
+/* ==========================================
+            MOBILE
+========================================== */
+
+@media(max-width:900px){
+
+.hero{
+
+    flex-direction:column-reverse;
+
+    text-align:center;
+
+}
+
+.hero-left{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+}
+
+.hero-left h1{
+
+    font-size:46px;
+
+}
+
+.hero-right img{
+
+    width:260px;
+
+    height:260px;
+
+}
+
+}
