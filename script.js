@@ -409,16 +409,32 @@ if (themeBtn) {
 
     const map = L.map(el, {
         center: [22, 35],
-        zoom: 2,
+        zoom: 2.4,
         minZoom: 2,
         maxZoom: 9,
         scrollWheelZoom: false,
         worldCopyJump: true
     });
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    const streets = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         maxZoom: 19,
         attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>'
-    }).addTo(map);
+    });
+    const satellite = L.tileLayer("https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}", {
+        maxZoom: 19,
+        attribution: 'Imagery &copy; Esri, Maxar, Earthstar Geographics, and the GIS User Community'
+    });
+    const placeLabels = L.tileLayer("https://services.arcgisonline.com/ArcGIS/rest/services/Reference/World_Boundaries_and_Places/MapServer/tile/{z}/{y}/{x}", {
+        maxZoom: 19,
+        opacity: 0.95,
+        attribution: 'Labels &copy; Esri'
+    });
+    satellite.addTo(map);
+    placeLabels.addTo(map);
+    L.control.layers(
+        {"Satellite imagery": satellite, "Street map": streets},
+        {"Country borders & place labels": placeLabels},
+        {collapsed: true, position: "topright"}
+    ).addTo(map);
 
     const home = [24.185, 88.85]; // Bagha, Rajshahi, Bangladesh
     const nodes = [
@@ -442,12 +458,12 @@ if (themeBtn) {
 
     nodes.forEach((node,index) => {
         const marker=L.circleMarker(node.coords,{
-            radius:5,weight:2,color:"#0e7490",fillColor:"#67e8f9",fillOpacity:.95
+            radius:5,weight:2,color:"#082f49",fillColor:"#67e8f9",fillOpacity:1
         }).addTo(map);
         marker.bindPopup("<strong>"+node.name+"</strong><br>Illustrative network endpoint");
         const route=L.polyline([home,node.coords],{
             color:index%2===0?"#0891b2":"#2563eb",
-            weight:1.5,opacity:.58,dashArray:"5 7"
+            weight:2,opacity:.82,dashArray:"7 9",lineCap:"round"
         }).addTo(map);
         route.bindTooltip("Illustrative route to "+node.name);
     });
