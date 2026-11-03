@@ -3,9 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio | CV</title>
+    <title>MD Mahe Hasan | Developer & Cybersecurity Portfolio</title>
+    <meta name="theme-color" content="#0b1220">
+    <meta name="description" content="Explore MD Mahe Hasan’s programming, cybersecurity interests, and technical projects.">
 
-    <link rel="stylesheet" href="style.css?v=20261103-terminal-fix">
+    <link rel="stylesheet" href="style.css?v=20261103-portfolio-polish">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -98,39 +100,59 @@
     </div>
 </section>
 
-<section id="about">
+<section id="about" class="portfolio-section about-section">
     <div class="container">
-        <h2>About Me</h2>
-        <p>
-            I'm a passionate programmer and cybersecurity enthusiast with a strong interest in building practical solutions and continuously expanding my technical skills. Programming is more than just a profession to me—it's a hobby that I genuinely enjoy, whether I'm creating new applications, automating tasks, or solving challenging problems.
-
-            Bug bounty and web security are areas I'm especially passionate about. I enjoy analyzing applications, discovering security vulnerabilities, and learning how systems work to help make them more secure. I'm always eager to explore new technologies, improve my coding abilities, and take on projects that challenge me to grow as both a developer and a security researcher.
-
-            My goal is to combine software development and cybersecurity to build secure, efficient, and impactful solutions while continuing to learn and contribute to the tech community.
-        </p>
-    </div>
-</section>
-
-<section id="skills">
-    <div class="container">
-        <h2>Skills</h2>
-        <div class="skills-grid">
-            <div class="card">Python</div>
-            <div class="card">Linux</div>
-            <div class="card">Networking</div>
-            <div class="card">Bug Bounty</div>
-            <div class="card">Web Security</div>
-            <div class="card">Git & GitHub</div>
+        <div class="section-heading">
+            <p class="section-eyebrow">01 / WHO I AM</p>
+            <h2>About Me</h2>
+            <p class="section-subtitle">Curious by nature. Building, experimenting, and learning every day.</p>
+        </div>
+        <div class="about-panel">
+            <div class="about-copy">
+                <p>I'm a programmer and cybersecurity enthusiast who enjoys turning ideas into practical projects. I work with Python, Linux, automation, and web technologies while continuously sharpening my skills.</p>
+                <p>I'm especially interested in web security, bug bounty research, and understanding how applications work. I like exploring systems, solving problems, and learning how to make software more secure.</p>
+                <p>My goal is to combine development and security to build useful, reliable tools—and keep growing through hands-on experience.</p>
+            </div>
+            <aside class="about-focus" aria-label="Areas of interest">
+                <span class="focus-label">CURRENT FOCUS</span>
+                <div><span class="focus-symbol" aria-hidden="true">⌘</span><span>Python &amp; automation</span></div>
+                <div><span class="focus-symbol" aria-hidden="true">⌁</span><span>Linux &amp; networking</span></div>
+                <div><span class="focus-symbol" aria-hidden="true">◇</span><span>Web security research</span></div>
+                <a href="#projects" class="focus-link">Explore my projects <span aria-hidden="true">↗</span></a>
+            </aside>
         </div>
     </div>
 </section>
 
-<section id="projects">
+<section id="skills" class="portfolio-section skills-section">
     <div class="container">
-        <h2>Featured Projects</h2>
+        <div class="section-heading">
+            <p class="section-eyebrow">02 / TOOLKIT</p>
+            <h2>Skills &amp; Interests</h2>
+            <p class="section-subtitle">Technologies and areas I enjoy working with and exploring.</p>
+        </div>
+        <div class="skills-grid">
+            <div class="card skill-card"><span class="skill-icon" aria-hidden="true">Py</span><span>Python</span><small>Programming</small></div>
+            <div class="card skill-card"><span class="skill-icon" aria-hidden="true">⌘</span><span>Linux</span><small>Systems</small></div>
+            <div class="card skill-card"><span class="skill-icon" aria-hidden="true">◎</span><span>Networking</span><small>Fundamentals</small></div>
+            <div class="card skill-card"><span class="skill-icon" aria-hidden="true">⚑</span><span>Bug Bounty</span><small>Research</small></div>
+            <div class="card skill-card"><span class="skill-icon" aria-hidden="true">◇</span><span>Web Security</span><small>Security testing</small></div>
+            <div class="card skill-card"><span class="skill-icon" aria-hidden="true">&lt;/&gt;</span><span>Git &amp; GitHub</span><small>Version control</small></div>
+        </div>
+    </div>
+</section>
+
+<section id="projects" class="portfolio-section projects-section">
+    <div class="container">
+        <div class="section-heading">
+            <p class="section-eyebrow">03 / SELECTED WORK</p>
+            <h2>Featured Projects</h2>
+            <p class="section-subtitle">A few things I've built and experimented with.</p>
+        </div>
 
         <div class="projects-grid">
             <article class="project">
+                <div class="project-topline"><span class="project-index">01 / AUTOMATION</span><span aria-hidden="true" class="project-mark">↗</span></div>
                 <span class="project-tag">AI · Automation · Python</span>
                 <h3>SYSTEMIC NEWS</h3>
                 <p>
@@ -146,6 +168,7 @@
             </article>
 
             <article class="project">
+                <div class="project-topline"><span class="project-index">02 / TELEGRAM BOT</span><span aria-hidden="true" class="project-mark">↗</span></div>
                 <span class="project-tag">Telegram · Translation · Voice</span>
                 <h3>Bangla Translator Bot</h3>
                 <p>
@@ -159,6 +182,7 @@
             </article>
 
             <article class="project">
+                <div class="project-topline"><span class="project-index">03 / SECURITY TOOLS</span><span aria-hidden="true" class="project-mark">↗</span></div>
                 <span class="project-tag">Python · Performance · Security</span>
                 <h3>Website Capacity Tester</h3>
                 <p>
@@ -174,10 +198,14 @@
     </div>
 </section>
 
-<section id="contact">
+<section id="contact" class="portfolio-section contact-section">
     <div class="container">
-        <h2>Contact</h2>
-        <p>Email: <a href="mailto:mdmahemahe899@gmail.com">mdmahemahe899@gmail.com</a></p>
+        <div class="contact-panel">
+            <p class="section-eyebrow">04 / GET IN TOUCH</p>
+            <h2>Let's connect.</h2>
+            <p>Have a project idea or want to talk about programming and cybersecurity? I'd love to hear from you.</p>
+            <a class="contact-cta" href="mailto:mdmahemahe899@gmail.com">Send me an email <span aria-hidden="true">↗</span></a>
+        </div>
     </div>
 </section>
 
