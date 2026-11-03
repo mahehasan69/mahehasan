@@ -185,3 +185,102 @@ if (themeBtn) {
         });
     });
 })();
+
+
+// ===============================
+// Safe Interactive Portfolio Terminal
+// ===============================
+
+const terminalForm = document.getElementById("terminal-form");
+const terminalInput = document.getElementById("terminal-input");
+const terminalOutput = document.getElementById("terminal-output");
+
+const terminalCommands = {
+    help: [
+        "Available commands:",
+        "  about     - learn about Mahe",
+        "  skills    - view technical interests",
+        "  projects  - explore selected projects",
+        "  contact   - show contact links",
+        "  clear     - clear this terminal",
+        "  whoami    - identify this portfolio"
+    ],
+    about: [
+        "MD Mahe Hasan",
+        "College student and aspiring cybersecurity professional.",
+        "Interested in Python, Linux, web security and building useful tools."
+    ],
+    skills: [
+        "TECHNICAL INTERESTS",
+        "Python | Linux | Networking fundamentals",
+        "Web security | Bug bounty learning | Git & GitHub",
+        "Automation | Telegram bot development"
+    ],
+    projects: [
+        "SELECTED PROJECTS",
+        "1. SYSTEMIC NEWS - automated news publishing",
+        "2. Bangla Translator Bot - Telegram translation project",
+        "3. Website Capacity Tester - controlled authorized load testing",
+        "Use the Projects section for links and more details."
+    ],
+    contact: [
+        "CONTACT",
+        "Email: mdmahemahe899@gmail.com",
+        "GitHub: github.com/mahehasan69",
+        "LinkedIn: linkedin.com/in/md-mahe-hasan-021a73381"
+    ],
+    whoami: [
+        "visitor@mahe-portfolio",
+        "You are exploring MD Mahe Hasan's personal portfolio.",
+        "This is a simulated portfolio terminal, not a real shell."
+    ]
+};
+
+function appendTerminalLine(text, className = "") {
+    if (!terminalOutput) return;
+    const line = document.createElement("p");
+    if (className) line.className = className;
+    line.textContent = text;
+    terminalOutput.appendChild(line);
+    terminalOutput.scrollTop = terminalOutput.scrollHeight;
+}
+
+function runPortfolioCommand(rawCommand) {
+    const command = rawCommand.trim().toLowerCase();
+    if (!command) return;
+
+    appendTerminalLine("mahe@portfolio:~$ " + rawCommand, "terminal-command");
+
+    if (command === "clear") {
+        terminalOutput.replaceChildren();
+        return;
+    }
+
+    const response = terminalCommands[command];
+    if (!response) {
+        appendTerminalLine("Command not found: " + command + ". Type 'help' to see available commands.", "terminal-error");
+        return;
+    }
+
+    response.forEach((line, index) => {
+        appendTerminalLine(line, index === 0 ? "terminal-response-title" : "terminal-response");
+    });
+}
+
+if (terminalForm && terminalInput && terminalOutput) {
+    terminalForm.addEventListener("submit", (event) => {
+        event.preventDefault();
+        runPortfolioCommand(terminalInput.value);
+        terminalInput.value = "";
+        terminalInput.focus();
+    });
+
+    document.querySelectorAll("[data-command]").forEach((button) => {
+        button.addEventListener("click", () => {
+            const command = button.dataset.command || "";
+            runPortfolioCommand(command);
+            terminalInput.value = "";
+            terminalInput.focus();
+        });
+    });
+}
