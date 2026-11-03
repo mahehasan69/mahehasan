@@ -1708,3 +1708,26 @@ body.dark-mode .network-section{background:#0f172a}
     text-decoration:none;
 }
 .global-network-map .map-street-view-link:hover{background:#16446d;color:#fff!important}
+
+
+/* Rotating 3D Earth intro; the detailed Leaflet map opens on zoom-in */
+.earth-globe{
+    width:100%;
+    height:clamp(340px,52vw,560px);
+    min-height:340px;
+    margin-top:14px;
+    overflow:hidden;
+    border:1px solid rgba(56,189,248,.35);
+    border-radius:14px;
+    background:radial-gradient(ellipse at center,#102b48 0%,#050d19 72%);
+}
+.earth-globe canvas{display:block;max-width:100%;outline:none}
+.globe-controls{display:flex;justify-content:center;align-items:center;gap:14px;flex-wrap:wrap;margin:12px 0 4px;color:#9db8d2;font-size:11px}
+.globe-enter-button{
+    border:1px solid #38bdf8;border-radius:999px;padding:9px 16px;
+    background:#102b48;color:#dff6ff;font:600 11px 'Poppins',sans-serif;cursor:pointer;
+}
+.globe-enter-button:hover{background:#16446d}
+.map-hidden{display:none!important}
+@media(max-width:600px){.earth-globe{height:390px;min-height:340px;border-radius:10px}}
+@media(prefers-reduced-motion:reduce){.earth-globe{scroll-behavior:auto}}
