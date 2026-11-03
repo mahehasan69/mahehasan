@@ -1416,7 +1416,7 @@ body.dark-mode .network-section{background:#0f172a}
     .hero-right::before{width:250px;height:250px}
     .hero-right::after{width:270px;height:270px}
     .tech-orbit{transform:scale(.82)}
-    .jet-arena{display:none !important}
+
 }
 @media(max-width:480px){
     header > .container{padding:0 18px}
@@ -1434,7 +1434,6 @@ body.dark-mode .network-section{background:#0f172a}
 
 /* MOBILE PORTRAIT ORBIT CONTAINMENT — keep every icon with the photo */
 @media(max-width:900px){
-    /* Fighter jets belong to the desktop hero only; avoid a detached orbit on phones. */
     .jet-arena{display:none !important;visibility:hidden !important;animation:none !important}
     .hero-right{
         position:relative;
