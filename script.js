@@ -468,6 +468,112 @@ if (themeBtn) {
         route.bindTooltip("Illustrative route to "+node.name);
     });
 
+    window.portfolioGlobalMap = map;
     setTimeout(() => map.invalidateSize(),250);
     window.addEventListener("resize",() => map.invalidateSize());
+})();
+
+
+// Visitor location: explicit opt-in, displayed only in this browser.
+(() => {
+    const start = document.getElementById("visitor-location-start");
+    const stop = document.getElementById("visitor-location-stop");
+    const status = document.getElementById("visitor-location-status");
+    const mapElement = document.getElementById("global-network-map");
+    if (!start || !stop || !status || !mapElement) return;
+
+    let watchId = null;
+    let visitorMarker = null;
+    let accuracyCircle = null;
+    let mapInstance = null;
+
+    function setStatus(message) { status.textContent = message; }
+
+    function stopSharing() {
+        if (watchId !== null && navigator.geolocation) {
+            navigator.geolocation.clearWatch(watchId);
+            watchId = null;
+        }
+        stop.hidden = true;
+        start.hidden = false;
+        setStatus("Location sharing stopped. Your location was not saved or sent to a server.");
+    }
+
+    start.addEventListener("click", () => {
+        if (!("geolocation" in navigator)) {
+            setStatus("This browser does not support location sharing.");
+            return;
+        }
+        if (!window.isSecureContext) {
+            setStatus("Location access requires a secure HTTPS connection.");
+            return;
+        }
+        if (watchId !== null) return;
+
+        setStatus("Waiting for your browser's location permission…");
+        navigator.geolocation.getCurrentPosition(position => {
+            const point = [position.coords.latitude, position.coords.longitude];
+            const accuracy = Math.max(20, position.coords.accuracy || 100);
+            if (typeof L === "undefined") {
+                setStatus("The map is not ready. Please reload and try again.");
+                return;
+            }
+            mapInstance = window.portfolioGlobalMap || null;
+            if (!mapInstance) {
+                setStatus("The map is still loading. Please try again in a moment.");
+                return;
+            }
+
+            const icon = L.divIcon({
+                className: "visitor-location-marker",
+                html: '<span class="visitor-location-pulse"></span><span class="visitor-location-core"></span>',
+                iconSize: [26, 26],
+                iconAnchor: [13, 13]
+            });
+            if (!visitorMarker) {
+                visitorMarker = L.marker(point, {icon, zIndexOffset: 1000}).addTo(mapInstance);
+                accuracyCircle = L.circle(point, {
+                    radius: accuracy,
+                    color: "#38bdf8",
+                    weight: 1,
+                    fillColor: "#38bdf8",
+                    fillOpacity: .12
+                }).addTo(mapInstance);
+            } else {
+                visitorMarker.setLatLng(point);
+                accuracyCircle.setLatLng(point).setRadius(accuracy);
+            }
+            visitorMarker.bindPopup("<strong>Your current location</strong><br>Visible only in this browser.");
+            mapInstance.setView(point, Math.max(mapInstance.getZoom(), 8), {animate: true});
+            setStatus("Your location is shown on this map only. Accuracy: about " + Math.round(accuracy) + " m.");
+            start.hidden = true;
+            stop.hidden = false;
+
+            watchId = navigator.geolocation.watchPosition(next => {
+                const nextPoint = [next.coords.latitude, next.coords.longitude];
+                const nextAccuracy = Math.max(20, next.coords.accuracy || 100);
+                visitorMarker.setLatLng(nextPoint);
+                accuracyCircle.setLatLng(nextPoint).setRadius(nextAccuracy);
+                setStatus("Live location active in this browser · accuracy about " + Math.round(nextAccuracy) + " m.");
+            }, error => {
+                const messages = {
+                    1: "Location permission was denied. You can allow it in your browser settings.",
+                    2: "Your current location is unavailable. Please try again.",
+                    3: "Location request timed out. Please try again."
+                };
+                setStatus(messages[error.code] || "Unable to update your location.");
+                stopSharing();
+            }, {enableHighAccuracy: true, maximumAge: 5000, timeout: 15000});
+        }, error => {
+            const messages = {
+                1: "Location permission was denied. Nothing was collected.",
+                2: "Your current location is unavailable. Please try again.",
+                3: "Location request timed out. Please try again."
+            };
+            setStatus(messages[error.code] || "Unable to access your location.");
+        }, {enableHighAccuracy: true, maximumAge: 5000, timeout: 15000});
+    });
+
+    stop.addEventListener("click", stopSharing);
+    window.addEventListener("pagehide", stopSharing);
 })();
