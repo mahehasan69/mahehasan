@@ -211,7 +211,9 @@
         </div>
         <div class="network-panel network-map-panel">
             <div class="network-status"><span class="network-live-dot"></span> INTERACTIVE WORLD MAP <span>SATELLITE + STREET LAYERS</span></div>
-            <div id="global-network-map" class="global-network-map" role="application" aria-label="Interactive world map showing illustrative network connections from Bagha, Bangladesh"></div>
+            <div id="earth-globe" class="earth-globe" role="img" aria-label="Slowly rotating interactive 3D Earth. Zoom in to explore the detailed map."></div>
+            <div class="globe-controls"><span id="globe-hint">🌎 Drag to rotate · Scroll or pinch to zoom in</span><button type="button" id="open-world-map" class="globe-enter-button">Explore 2D map ↗</button></div>
+            <div id="global-network-map" class="global-network-map map-hidden" role="application" aria-label="Interactive world map showing illustrative network connections from Bagha, Bangladesh"></div>
             <div class="map-live-hud" aria-label="Map overview">
                 <span><i class="hud-pulse"></i> MAP SYSTEM ONLINE</span>
                 <span><strong>08</strong> GLOBAL NODES</span>
@@ -267,8 +269,9 @@
     </div>
 </footer>
 
+    <script src="https://unpkg.com/globe.gl"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
-<script src="script.js?v=20261103-street-view"></script>
+<script src="script.js?v=20261103-rotating-earth"></script>
 
 </body>
 </html>
