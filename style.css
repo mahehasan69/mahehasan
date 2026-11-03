@@ -1297,3 +1297,13 @@ body.dark-mode .projects-section .project-links{border-color:#334155}
 @media(prefers-reduced-motion:reduce){
  .skills-section .skill-card,.projects-section .project,.contact-cta{transition:none}
 }
+
+
+/* Mobile browser viewport safeguard */
+@media(max-width:1024px){
+    .about-panel{grid-template-columns:minmax(0,1fr);}
+}
+@media(max-width:700px){
+    .projects-section .projects-grid{grid-template-columns:minmax(0,1fr);}
+    .about-copy,.about-focus{width:100%;min-width:0;}
+}
