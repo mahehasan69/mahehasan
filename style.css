@@ -1684,3 +1684,10 @@ body.dark-mode .network-section{background:#0f172a}
  .network-packet-marker{display:none!important}
 }
 @media(max-width:600px){.map-live-hud{gap:10px 16px;padding:10px 8px;font-size:8px}}
+
+
+/* Performance mode: keep map visuals static and GPU-light */
+.global-network-map .network-route-flow{animation:none!important;filter:none!important}
+.hud-pulse{animation:none!important;box-shadow:0 0 0 3px rgba(52,211,153,.12)!important}
+.network-packet-marker{display:none!important}
+.network-node-pulse{filter:none!important}
