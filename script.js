@@ -455,6 +455,51 @@ if (themeBtn) {
             if (altitude < 1.45) openMap([lat, lng]);
         });
 
+    // Neon-blue global data routes inspired by the supplied reference image.
+    const earthHub = {lat: 24.185, lng: 88.85};
+    const earthNodes = [
+        {name:"Dhaka",lat:23.8103,lng:90.4125},
+        {name:"Singapore",lat:1.3521,lng:103.8198},
+        {name:"Dubai",lat:25.2048,lng:55.2708},
+        {name:"London",lat:51.5072,lng:-0.1276},
+        {name:"Frankfurt",lat:50.1109,lng:8.6821},
+        {name:"Tokyo",lat:35.6762,lng:139.6503},
+        {name:"New York",lat:40.7128,lng:-74.0060},
+        {name:"Sydney",lat:-33.8688,lng:151.2093}
+    ];
+    const glowingRoutes = earthNodes.map((node, index) => ({
+        startLat: earthHub.lat,
+        startLng: earthHub.lng,
+        endLat: node.lat,
+        endLng: node.lng,
+        color: index % 2 ? ["#38bdf8", "#67e8f9"] : ["#22d3ee", "#a5f3fc"]
+    }));
+    const glowingPoints = [
+        {lat: earthHub.lat, lng: earthHub.lng, name:"Bagha, Bangladesh"},
+        ...earthNodes
+    ];
+
+    globe
+        .arcsData(glowingRoutes)
+        .arcStartLat("startLat")
+        .arcStartLng("startLng")
+        .arcEndLat("endLat")
+        .arcEndLng("endLng")
+        .arcColor("color")
+        .arcAltitude(0.22)
+        .arcStroke(0.65)
+        .arcDashLength(0.42)
+        .arcDashGap(0.18)
+        .arcDashInitialGap(() => Math.random())
+        .arcDashAnimateTime(reducedMotion ? 0 : 2600)
+        .pointsData(glowingPoints)
+        .pointLat("lat")
+        .pointLng("lng")
+        .pointColor(() => "#a5f3fc")
+        .pointAltitude(0.012)
+        .pointRadius(0.22)
+        .pointsMerge(true);
+
     globe.width(globeEl.clientWidth).height(globeEl.clientHeight);
     if (globe.controls) {
         const controls = globe.controls();
