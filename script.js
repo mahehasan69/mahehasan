@@ -483,16 +483,17 @@ if (themeBtn) {
         });
     }
 
-    const worldLinks = [];
-    for (let i = 0; i < 72; i++) {
-        const a = globalLights[(i * 17) % lightCount];
-        const b = globalLights[(i * 43 + 29) % lightCount];
-        if (a !== b) worldLinks.push({
-            startLat: a.lat, startLng: a.lng,
-            endLat: b.lat, endLng: b.lng,
-            color: i % 3 === 0 ? ["#22d3ee", "#67e8f9"] : ["#38bdf8", "#a5f3fc"]
-        });
-    }
+    // Every illuminated route radiates from one origin: Bagha, Bangladesh.
+    // Destinations are spread over the whole planet to create a worldwide network effect.
+    const worldLinks = globalLights
+        .filter((point, index) => index % 2 === 0)
+        .map((point, index) => ({
+            startLat: earthHub.lat,
+            startLng: earthHub.lng,
+            endLat: point.lat,
+            endLng: point.lng,
+            color: index % 3 === 0 ? ["#22d3ee", "#67e8f9"] : ["#38bdf8", "#a5f3fc"]
+        }));
 
     const hubLinks = earthNodes.map((node, index) => ({
         startLat: earthHub.lat,
@@ -513,16 +514,16 @@ if (themeBtn) {
         .arcColor("color")
         .arcAltitude(0.12)
         .arcStroke(0.42)
-        .arcDashLength(0.28)
-        .arcDashGap(0.12)
-        .arcDashInitialGap((d, i) => (i * 0.137) % 1)
-        .arcDashAnimateTime(reducedMotion ? 0 : 5200)
+        .arcDashLength(0.18)
+        .arcDashGap(0.10)
+        .arcDashInitialGap((d, i) => (i * 0.071) % 1)
+        .arcDashAnimateTime(reducedMotion ? 0 : 3200)
         .pointsData(allLights)
         .pointLat("lat")
         .pointLng("lng")
         .pointColor(() => "#8be9ff")
         .pointAltitude(0.008)
-        .pointRadius(0.13)
+        .pointRadius((d) => d.lat === earthHub.lat && d.lng === earthHub.lng ? 0.32 : 0.13)
         .pointsMerge(true);
 
     globe.width(globeEl.clientWidth).height(globeEl.clientHeight);
