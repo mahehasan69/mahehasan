@@ -1310,67 +1310,6 @@ body.dark-mode .projects-section .project-links{border-color:#334155}
 
 
 /* ==========================================
-   FIGHTER JET DOGFIGHT — HERO DECORATION
-========================================== */
-.hero{position:relative;isolation:isolate}
-.hero-left,.hero-right{position:relative;z-index:2}
-.jet-arena{
-    position:absolute;z-index:1;pointer-events:none;
-    left:70%;top:52%;width:min(48vw,560px);height:330px;
-    transform:translate(-50%,-50%);opacity:.78;
-}
-.jet-orbit{
-    position:absolute;inset:0;border:1px dashed rgba(96,165,250,.13);
-    border-radius:50%;animation:jetOrbitSpin 19s linear infinite;
-}
-.jet-orbit::before{
-    content:"";position:absolute;inset:22px;
-    border:1px solid rgba(56,189,248,.10);border-radius:50%;
-}
-.fighter-jet{
-    position:absolute;width:38px;height:46px;overflow:visible;
-    filter:drop-shadow(0 0 8px rgba(56,189,248,.8));
-}
-.jet-one{top:-22px;left:calc(50% - 19px);transform:rotate(90deg)}
-.jet-two{bottom:-22px;right:calc(50% - 19px);transform:rotate(-90deg);filter:drop-shadow(0 0 8px rgba(167,139,250,.75))}
-.jet-body{fill:#7dd3fc;stroke:#e0f2fe;stroke-width:1.2;stroke-linejoin:round}
-.jet-two .jet-body{fill:#a78bfa;stroke:#ede9fe}
-.jet-canopy{fill:#0f2b49;stroke:#bae6fd;stroke-width:1}
-.jet-two .jet-canopy{fill:#30205c;stroke:#ddd6fe}
-.jet-detail{fill:none;stroke:#e0f2fe;stroke-width:1.5;stroke-linecap:round;opacity:.8}
-.jet-two .jet-detail{stroke:#ede9fe}
-.jet-trail{
-    position:absolute;width:2px;height:80px;border-radius:50%;
-    opacity:.38;filter:blur(2px);transform-origin:top;pointer-events:none;
-}
-.jet-trail-one{
-    top:5%;left:50%;
-    background:linear-gradient(to bottom,rgba(56,189,248,0),#38bdf8,rgba(56,189,248,0));
-    transform:rotate(90deg);
-}
-.jet-trail-two{
-    bottom:5%;right:50%;
-    background:linear-gradient(to bottom,rgba(167,139,250,0),#a78bfa,rgba(167,139,250,0));
-    transform:rotate(-90deg);
-}
-@keyframes jetOrbitSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-@media(max-width:900px){
-    .jet-arena{left:50%;top:27%;width:min(82vw,430px);height:245px;opacity:.48}
-    .fighter-jet{width:30px;height:36px}
-    .jet-one{left:calc(50% - 15px);top:-17px}
-    .jet-two{right:calc(50% - 15px);bottom:-17px}
-}
-@media(max-width:600px){
-    .jet-arena{top:24%;width:84vw;height:215px;opacity:.38}
-    .jet-orbit{border-color:rgba(96,165,250,.10)}
-}
-@media(prefers-reduced-motion:reduce){
-    .jet-orbit{animation:none}
-    .jet-arena{opacity:.18}
-}
-
-
-/* ==========================================
    GLOBAL NETWORK MAP + PORTFOLIO ASSISTANT
 ========================================== */
 .network-section{background:#eef3fa}
