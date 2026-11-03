@@ -1740,3 +1740,38 @@ body.dark-mode .network-section{background:#0f172a}
 .network-map-panel:not(.map-mode) .network-disclaimer{display:none!important}
 .earth-globe{position:relative}
 .earth-globe canvas{width:100%!important;height:100%!important}
+
+
+/* Performance polish: keep motion lightweight and avoid expensive animated shadows/blur. */
+.hero-right::before{
+    filter:none;
+    animation-duration:6s;
+}
+.hero-right img{
+    animation:profileFloat 6s ease-in-out infinite;
+    box-shadow:0 0 26px rgba(37,99,235,.22),0 0 48px rgba(37,99,235,.08);
+    will-change:transform;
+}
+.hero-right::after{
+    box-shadow:0 0 16px rgba(59,130,246,.08),inset 0 0 16px rgba(59,130,246,.05);
+}
+.tech-icon{
+    -webkit-backdrop-filter:none;
+    backdrop-filter:none;
+    animation-duration:6s;
+}
+.assistant-launcher,
+.globe-enter-button,
+.contact-cta,
+.skills-section .skill-card,
+.projects-section .project{
+    transition-duration:.18s;
+}
+@media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{
+        scroll-behavior:auto!important;
+        animation-duration:.01ms!important;
+        animation-iteration-count:1!important;
+        transition-duration:.01ms!important;
+    }
+}
