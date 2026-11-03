@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CV | MD Mahe Hasan</title>
+<style>
+    :root { --ink:#172033; --muted:#526078; --accent:#2457c5; --line:#dce3ee; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:#eef2f7; color:var(--ink); font:15px/1.55 Arial, sans-serif; }
+    .toolbar { max-width:850px; margin:22px auto 12px; display:flex; justify-content:flex-end; }
+    .print-btn { border:0; border-radius:7px; padding:11px 18px; background:var(--accent); color:#fff; font-weight:700; cursor:pointer; }
+    .page { max-width:850px; margin:0 auto 30px; padding:48px 56px; background:#fff; box-shadow:0 8px 30px rgba(20,35,60,.10); }
+    header { border-bottom:2px solid var(--accent); padding-bottom:18px; margin-bottom:22px; }
+    h1 { margin:0 0 4px; font-size:32px; letter-spacing:.5px; }
+    .headline { color:var(--accent); font-weight:700; font-size:16px; margin:0 0 10px; }
+    .contact { color:var(--muted); font-size:13px; }
+    .contact a { color:var(--accent); text-decoration:none; }
+    section { margin:20px 0; }
+    h2 { margin:0 0 9px; padding-bottom:5px; border-bottom:1px solid var(--line); color:var(--accent); font-size:16px; text-transform:uppercase; letter-spacing:1px; }
+    p { margin:5px 0; }
+    ul { margin:6px 0 0; padding-left:19px; }
+    li { margin:4px 0; }
+    .item { margin:11px 0 14px; }
+    .item-title { font-weight:700; }
+    .meta { color:var(--muted); font-size:13px; }
+    .skills { display:flex; flex-wrap:wrap; gap:7px; }
+    .skills span { border:1px solid var(--line); border-radius:5px; padding:4px 9px; font-size:13px; }
+    @media(max-width:600px) { .page { padding:28px 22px; margin:0 10px 20px; } h1 { font-size:27px; } .toolbar { margin:14px 10px; } }
+    @media print {
+        @page { size:A4; margin:14mm; }
+        body { background:#fff; font-size:11pt; }
+        .toolbar { display:none; }
+        .page { max-width:none; margin:0; padding:0; box-shadow:none; }
+        a { color:inherit; text-decoration:none; }
+        section { break-inside:avoid; }
+    }
+</style>
+</head>
+<body>
+<div class="toolbar">
+    <button class="print-btn" onclick="window.print()">Download / Save as PDF</button>
+</div>
+<main class="page">
+    <header>
+        <h1>MD MAHE HASAN</h1>
+        <p class="headline">Aspiring Cybersecurity Professional | Python & Linux Enthusiast</p>
+        <div class="contact">
+            Bagha, Rajshahi, Bangladesh ·
+            <a href="mailto:mdmahemahe899@gmail.com">mdmahemahe899@gmail.com</a><br>
+            GitHub: <a href="https://github.com/mahehasan69">github.com/mahehasan69</a> ·
+            LinkedIn: <a href="https://www.linkedin.com/in/md-mahe-hasan-021a73381/">linkedin.com/in/md-mahe-hasan-021a73381</a>
+        </div>
+    </header>
+
+    <section>
+        <h2>Professional Profile</h2>
+        <p>
+            College student and aspiring cybersecurity professional interested in web security,
+            ethical hacking, Python automation, and Linux. Enjoys building practical software
+            projects, learning how web applications work, and developing skills through hands-on
+            experimentation. Seeking opportunities to learn, collaborate, and grow in software
+            development and cybersecurity.
+        </p>
+    </section>
+
+    <section>
+        <h2>Education</h2>
+        <div class="item">
+            <div class="item-title">Higher Secondary Certificate (HSC) – Class XI, Science</div>
+            <div class="meta">Shahdoula Government College · Bagha, Rajshahi, Bangladesh</div>
+            <p>Current student. Academic focus includes science subjects and higher mathematics.</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>Technical Skills & Interests</h2>
+        <div class="skills">
+            <span>Python</span><span>Linux</span><span>Networking Fundamentals</span>
+            <span>Web Security</span><span>Bug Bounty Learning</span>
+            <span>Git & GitHub</span><span>Automation</span><span>Telegram Bot Development</span>
+        </div>
+    </section>
+
+    <section>
+        <h2>Selected Projects</h2>
+        <div class="item">
+            <div class="item-title">SYSTEMIC NEWS – Automated News Platform</div>
+            <div class="meta">Python · AI-assisted summarization · Telegram · GitHub Actions</div>
+            <ul>
+                <li>Developed an automated news workflow to collect stories, prepare concise summaries, and publish updates.</li>
+                <li>Connected the project with a website and Telegram publishing workflow.</li>
+            </ul>
+            <p class="meta">Website: systemicnews.new.tg · GitHub: github.com/mahehasan69/telegram-news-bot</p>
+        </div>
+        <div class="item">
+            <div class="item-title">Bangla Translator Bot</div>
+            <div class="meta">Telegram Bot API · Cloudflare Workers · Translation · Text-to-Speech exploration</div>
+            <ul>
+                <li>Built a Telegram bot workflow for translating replied-to messages into Bangla.</li>
+                <li>Explored voice output so translated text can also be delivered as audio.</li>
+            </ul>
+            <p class="meta">Source repository is private.</p>
+        </div>
+        <div class="item">
+            <div class="item-title">Website Capacity Tester</div>
+            <div class="meta">Python · HTTP load testing · Telegram controls · GitHub Actions</div>
+            <ul>
+                <li>Created a controlled load-testing tool for websites and infrastructure with authorization.</li>
+                <li>Includes target allowlisting, bounded test settings, status reporting, and performance metrics.</li>
+            </ul>
+            <p class="meta">GitHub: github.com/mahehasan69/capacity-tester</p>
+        </div>
+    </section>
+
+    <section>
+        <h2>Career Objective</h2>
+        <p>
+            To strengthen my foundations in cybersecurity and software development, contribute
+            to meaningful projects, and build a career focused on making digital systems safer.
+        </p>
+    </section>
+</main>
+</body>
+</html>
