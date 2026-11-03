@@ -1491,3 +1491,44 @@ body.dark-mode .network-section{background:#0f172a}
     .hero-right::before{width:225px;height:225px}
     .hero-right::after{width:240px;height:240px}
 }
+
+
+/* MOBILE PORTRAIT ORBIT CONTAINMENT — keep every icon with the photo */
+@media(max-width:900px){
+    /* Fighter jets belong to the desktop hero only; avoid a detached orbit on phones. */
+    .jet-arena{display:none !important;visibility:hidden !important;animation:none !important}
+    .hero-right{
+        position:relative;
+        width:100%;
+        min-height:300px !important;
+        overflow:visible;
+    }
+    .tech-orbit{
+        position:absolute !important;
+        width:280px !important;
+        height:280px !important;
+        inset:50% auto auto 50% !important;
+        transform:translate(-50%,-50%) !important;
+        z-index:4;
+    }
+    .tech-icon{
+        width:40px !important;
+        height:40px !important;
+        border-radius:12px !important;
+        font-size:19px !important;
+    }
+    .tech-shield{top:5% !important;left:5% !important;right:auto !important;bottom:auto !important}
+    .tech-terminal{top:5% !important;right:5% !important;left:auto !important;bottom:auto !important}
+    .tech-python{bottom:5% !important;left:5% !important;right:auto !important;top:auto !important}
+    .tech-linux{bottom:5% !important;right:5% !important;left:auto !important;top:auto !important}
+    .tech-network{top:50% !important;right:-2% !important;left:auto !important;bottom:auto !important}
+}
+@media(max-width:480px){
+    .hero-right{min-height:270px !important}
+    .hero-right img{width:190px !important;height:190px !important}
+    .hero-right::before{width:215px !important;height:215px !important}
+    .hero-right::after{width:232px !important;height:232px !important}
+    .tech-orbit{width:255px !important;height:255px !important}
+    .tech-icon{width:36px !important;height:36px !important;font-size:17px !important}
+    .tech-network{right:-1% !important}
+}
