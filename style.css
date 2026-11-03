@@ -1691,3 +1691,20 @@ body.dark-mode .network-section{background:#0f172a}
 .hud-pulse{animation:none!important;box-shadow:0 0 0 3px rgba(52,211,153,.12)!important}
 .network-packet-marker{display:none!important}
 .network-node-pulse{filter:none!important}
+
+
+/* Street View links inside map location popups */
+.global-network-map .map-street-view-link{
+    display:inline-flex;
+    align-items:center;
+    margin-top:7px;
+    padding:6px 10px;
+    border:1px solid rgba(56,189,248,.55);
+    border-radius:7px;
+    background:#102b48;
+    color:#7dd3fc!important;
+    font-size:11px;
+    font-weight:600;
+    text-decoration:none;
+}
+.global-network-map .map-street-view-link:hover{background:#16446d;color:#fff!important}
