@@ -1607,3 +1607,27 @@ body.dark-mode .network-section{background:#0f172a}
   .hero-right:after{width:275px!important;height:275px!important}
   .tech-orbit{width:290px!important;height:290px!important}
 }
+
+
+/* Satellite basemap controls */
+.global-network-map .leaflet-control-layers{
+    border:1px solid rgba(56,189,248,.35);
+    border-radius:10px;
+    background:rgba(8,18,32,.94);
+    color:#e2f3ff;
+    box-shadow:0 5px 18px rgba(0,0,0,.25);
+    font:11px/1.6 'Poppins',sans-serif;
+}
+.global-network-map .leaflet-control-layers-toggle{
+    width:38px;height:38px;
+    background-color:#10243b;
+    background-size:20px 20px;
+}
+.global-network-map .leaflet-control-layers-expanded{padding:10px 12px}
+.global-network-map .leaflet-control-layers-separator{border-top:1px solid #34506c}
+.global-network-map .leaflet-control-layers label{margin:4px 0;color:#e2f3ff}
+.global-network-map .leaflet-control-attribution{
+    background:rgba(8,18,32,.75)!important;
+    color:#d5e7f8!important;
+}
+.global-network-map .leaflet-control-attribution a{color:#7dd3fc!important}
