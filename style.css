@@ -660,3 +660,63 @@ body.dark-mode .project-tag{
         scroll-behavior:auto;
     }
 }
+
+
+/* ==========================================
+       FLOATING CYBERSECURITY ICONS
+========================================== */
+
+.tech-orbit{
+    position:absolute;
+    inset:0;
+    z-index:3;
+    pointer-events:none;
+}
+
+.tech-icon{
+    position:absolute;
+    display:grid;
+    place-items:center;
+    width:54px;
+    height:54px;
+    border:1px solid rgba(147,197,253,.55);
+    border-radius:16px;
+    background:rgba(15,23,42,.82);
+    color:#bfdbfe;
+    font-size:25px;
+    font-weight:800;
+    box-shadow:0 8px 28px rgba(37,99,235,.25), inset 0 0 14px rgba(96,165,250,.10);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    animation:techFloat 4.5s ease-in-out infinite;
+}
+
+.tech-shield{ top:8%; left:13%; animation-delay:0s; }
+.tech-terminal{ top:15%; right:10%; color:#67e8f9; animation-delay:.7s; }
+.tech-python{ bottom:15%; left:8%; color:#facc15; animation-delay:1.4s; }
+.tech-linux{ bottom:9%; right:13%; animation-delay:2.1s; }
+.tech-network{ top:48%; right:1%; color:#c4b5fd; animation-delay:2.8s; }
+
+@keyframes techFloat{
+    0%,100%{ transform:translate3d(0,0,0) rotate(-5deg); }
+    50%{ transform:translate3d(0,-12px,0) rotate(5deg); }
+}
+
+@media(max-width:900px){
+    .tech-icon{
+        width:46px;
+        height:46px;
+        border-radius:14px;
+        font-size:21px;
+    }
+
+    .tech-shield{ top:4%; left:8%; }
+    .tech-terminal{ top:8%; right:7%; }
+    .tech-python{ bottom:9%; left:5%; }
+    .tech-linux{ bottom:5%; right:8%; }
+    .tech-network{ top:45%; right:0; }
+}
+
+@media(prefers-reduced-motion:reduce){
+    .tech-icon{ animation:none !important; }
+}
