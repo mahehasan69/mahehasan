@@ -1470,3 +1470,71 @@ body.dark-mode .network-section{background:#0f172a}
     .tech-icon{width:36px !important;height:36px !important;font-size:17px !important}
     .tech-network{right:-1% !important}
 }
+
+
+/* FINAL MOBILE HERO REPAIR — compact portrait, no detached aircraft */
+.jet-arena,.fighter-jet,.jet-orbit,.jet-trail{display:none !important;visibility:hidden !important;animation:none !important}
+@media(max-width:900px){
+    header{overflow:hidden}
+    header > .container{width:100%;max-width:100%;padding-left:20px;padding-right:20px}
+    .hero{
+        min-height:0 !important;
+        height:auto !important;
+        padding:30px 0 34px !important;
+        margin:0 !important;
+        display:flex !important;
+        flex-direction:column !important;
+        justify-content:flex-start !important;
+        align-items:stretch !important;
+        gap:24px !important;
+    }
+    .hero-left{order:1;width:100%;min-width:0;flex:none}
+    .hero-right{
+        order:2;
+        flex:none !important;
+        width:100% !important;
+        height:280px !important;
+        min-height:280px !important;
+        margin:0 !important;
+        padding:0 !important;
+        display:flex !important;
+        align-items:center !important;
+        justify-content:center !important;
+        position:relative !important;
+    }
+    .hero-right img{
+        width:190px !important;
+        height:190px !important;
+        max-width:190px !important;
+        max-height:190px !important;
+        margin:0 !important;
+        position:relative !important;
+        z-index:2 !important;
+    }
+    .hero-right::before{width:215px !important;height:215px !important}
+    .hero-right::after{width:232px !important;height:232px !important}
+    .tech-orbit{
+        position:absolute !important;
+        inset:50% auto auto 50% !important;
+        width:250px !important;
+        height:250px !important;
+        transform:translate(-50%,-50%) !important;
+        z-index:4 !important;
+        pointer-events:none !important;
+    }
+    .tech-icon{width:36px !important;height:36px !important;font-size:17px !important}
+    .tech-shield{top:4% !important;left:4% !important;right:auto !important;bottom:auto !important}
+    .tech-terminal{top:4% !important;right:4% !important;left:auto !important;bottom:auto !important}
+    .tech-python{bottom:4% !important;left:4% !important;right:auto !important;top:auto !important}
+    .tech-linux{bottom:4% !important;right:4% !important;left:auto !important;top:auto !important}
+    .tech-network{top:50% !important;right:-1% !important;left:auto !important;bottom:auto !important}
+}
+@media(max-width:480px){
+    header > .container{padding-left:18px;padding-right:18px}
+    .hero{gap:18px !important;padding-top:24px !important;padding-bottom:24px !important}
+    .hero-right{height:260px !important;min-height:260px !important}
+    .hero-right img{width:180px !important;height:180px !important}
+    .hero-right::before{width:205px !important;height:205px !important}
+    .hero-right::after{width:220px !important;height:220px !important}
+    .tech-orbit{width:235px !important;height:235px !important}
+}
