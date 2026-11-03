@@ -550,3 +550,113 @@ body.dark-mode .project-tag{
     }
 }
 
+
+
+/* ==========================================
+       ANIMATED PROFILE PHOTO EXPERIENCE
+========================================== */
+
+.hero-right{
+    position:relative;
+    isolation:isolate;
+    min-height:390px;
+    align-items:center;
+}
+
+.hero-right::before{
+    content:"";
+    position:absolute;
+    width:360px;
+    height:360px;
+    border-radius:50%;
+    background:radial-gradient(circle, rgba(37,99,235,.30) 0%, rgba(59,130,246,.13) 45%, transparent 72%);
+    filter:blur(12px);
+    z-index:-2;
+    animation:photoGlow 4s ease-in-out infinite alternate;
+}
+
+.hero-right::after{
+    content:"";
+    position:absolute;
+    width:390px;
+    height:390px;
+    border:1px solid rgba(96,165,250,.55);
+    border-radius:50%;
+    z-index:-1;
+    animation:orbitSpin 18s linear infinite;
+    box-shadow:0 0 24px rgba(59,130,246,.12), inset 0 0 24px rgba(59,130,246,.08);
+}
+
+.hero-right img{
+    position:relative;
+    z-index:1;
+    animation:profileFloat 5s ease-in-out infinite, profilePulse 4s ease-in-out infinite;
+    will-change:transform, box-shadow;
+}
+
+.hero-right img:hover{
+    animation-play-state:paused;
+    transform:scale(1.06) rotate(1deg);
+}
+
+@keyframes profileFloat{
+    0%,100%{ transform:translateY(0); }
+    50%{ transform:translateY(-13px); }
+}
+
+@keyframes profilePulse{
+    0%,100%{ box-shadow:0 0 22px rgba(37,99,235,.28), 0 0 55px rgba(37,99,235,.10); }
+    50%{ box-shadow:0 0 34px rgba(59,130,246,.55), 0 0 85px rgba(37,99,235,.22); }
+}
+
+@keyframes photoGlow{
+    from{ opacity:.65; transform:scale(.92); }
+    to{ opacity:1; transform:scale(1.08); }
+}
+
+@keyframes orbitSpin{
+    from{ transform:rotate(0deg) scale(1); }
+    to{ transform:rotate(360deg) scale(1); }
+}
+
+@media(max-width:900px){
+    .hero{
+        min-height:auto;
+        padding:55px 0 75px;
+        gap:28px;
+        flex-direction:column-reverse;
+    }
+
+    .hero-right{
+        flex:none;
+        width:100%;
+        min-height:300px;
+    }
+
+    .hero-right::before{
+        width:285px;
+        height:285px;
+    }
+
+    .hero-right::after{
+        width:300px;
+        height:300px;
+    }
+
+    .hero-right img{
+        width:240px;
+        height:240px;
+    }
+}
+
+@media(prefers-reduced-motion:reduce){
+    .hero-right::before,
+    .hero-right::after,
+    .hero-right img{
+        animation:none !important;
+    }
+
+    html{
+        scroll-behavior:auto;
+    }
+}
