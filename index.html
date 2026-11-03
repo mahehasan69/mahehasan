@@ -212,6 +212,11 @@
         <div class="network-panel network-map-panel">
             <div class="network-status"><span class="network-live-dot"></span> INTERACTIVE WORLD MAP <span>SATELLITE + STREET LAYERS</span></div>
             <div id="global-network-map" class="global-network-map" role="application" aria-label="Interactive world map showing illustrative network connections from Bagha, Bangladesh"></div>
+            <div class="visitor-location-tools">
+                <button type="button" id="visitor-location-start" class="visitor-location-button">◎ Show my location</button>
+                <button type="button" id="visitor-location-stop" class="visitor-location-stop" hidden>Stop sharing</button>
+                <span id="visitor-location-status" role="status" aria-live="polite">Your location is private until you choose to share it.</span>
+            </div>
             <div class="network-map-caption"><span><i class="map-origin-dot"></i> Home node · Bagha, Bangladesh</span><span><i class="map-route-line"></i> Illustrative global routes</span><span>Switch layers · drag to explore · zoom to inspect</span></div>
             <p class="network-disclaimer">Real geographic map data © OpenStreetMap contributors. Connection paths are illustrative and do not represent live internet traffic.</p>
         </div>
