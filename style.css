@@ -1588,3 +1588,22 @@ body.dark-mode .network-section{background:#0f172a}
   .hero-right:after{width:210px!important;height:210px!important}
   .tech-orbit{width:225px!important;height:225px!important}
 }
+
+
+/* Keep the portrait prominent; reduce only the empty vertical gap */
+@media screen and (max-width:1200px){
+  .hero{gap:6px!important;padding:20px 0!important}
+  .hero-right{height:310px!important;min-height:310px!important}
+  .hero-right img{width:255px!important;height:255px!important}
+  .hero-right:before{width:280px!important;height:280px!important}
+  .hero-right:after{width:295px!important;height:295px!important}
+  .tech-orbit{width:310px!important;height:310px!important}
+}
+@media screen and (max-width:600px){
+  .hero{gap:4px!important;padding:16px 0!important}
+  .hero-right{height:290px!important;min-height:290px!important}
+  .hero-right img{width:235px!important;height:235px!important}
+  .hero-right:before{width:260px!important;height:260px!important}
+  .hero-right:after{width:275px!important;height:275px!important}
+  .tech-orbit{width:290px!important;height:290px!important}
+}
