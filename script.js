@@ -401,6 +401,75 @@ if (themeBtn) {
 })();
 
 
+// Interactive rotating 3D Earth. Zooming in reveals the detailed 2D map.
+(() => {
+    const globeEl = document.getElementById("earth-globe");
+    const mapEl = document.getElementById("global-network-map");
+    const openButton = document.getElementById("open-world-map");
+    const hint = document.getElementById("globe-hint");
+    if (!globeEl || !mapEl || typeof Globe !== "function") {
+        if (globeEl) globeEl.textContent = "3D globe unavailable. Use the map below.";
+        if (mapEl) mapEl.classList.remove("map-hidden");
+        return;
+    }
+
+    let globe = null;
+    let opened = false;
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    function openMap(point) {
+        if (opened) return;
+        opened = true;
+        globeEl.classList.add("map-hidden");
+        mapEl.classList.remove("map-hidden");
+        if (hint) hint.textContent = "Detailed map view · satellite and street layers";
+        if (openButton) openButton.textContent = "Back to 3D Earth";
+        const map = window.portfolioGlobalMap;
+        if (map) {
+            map.setView(point || [22, 35], 2.4, {animate: false});
+            setTimeout(() => map.invalidateSize(), 80);
+        }
+    }
+
+    function showGlobe() {
+        if (!opened) return;
+        opened = false;
+        mapEl.classList.add("map-hidden");
+        globeEl.classList.remove("map-hidden");
+        if (hint) hint.textContent = "🌎 Drag to rotate · Scroll or pinch to zoom in";
+        if (openButton) openButton.textContent = "Explore 2D map ↗";
+        if (globe) setTimeout(() => globe.width(globeEl.clientWidth).height(globeEl.clientHeight), 50);
+    }
+
+    globe = Globe()(globeEl)
+        .globeImageUrl("https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg")
+        .backgroundColor("rgba(0,0,0,0)")
+        .showAtmosphere(true)
+        .atmosphereColor("#38bdf8")
+        .atmosphereAltitude(0.16)
+        .pointOfView({lat: 20, lng: 35, altitude: 2.35})
+        .onZoom(({lat, lng, altitude}) => {
+            if (altitude < 1.45) openMap([lat, lng]);
+        });
+
+    globe.width(globeEl.clientWidth).height(globeEl.clientHeight);
+    if (globe.controls) {
+        const controls = globe.controls();
+        controls.autoRotate = !reducedMotion;
+        controls.autoRotateSpeed = 0.28;
+        controls.enableDamping = true;
+    }
+
+    if (openButton) openButton.addEventListener("click", () => {
+        if (opened) showGlobe();
+        else openMap([22, 35]);
+    });
+
+    window.addEventListener("resize", () => {
+        if (globe && !opened) globe.width(globeEl.clientWidth).height(globeEl.clientHeight);
+    });
+})();
+ 
 // Interactive real-world global map. Routes are illustrative, not live traffic.
 (() => {
     const el = document.getElementById("global-network-map");
