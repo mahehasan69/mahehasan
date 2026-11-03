@@ -1713,8 +1713,8 @@ body.dark-mode .network-section{background:#0f172a}
 /* Rotating 3D Earth intro; the detailed Leaflet map opens on zoom-in */
 .earth-globe{
     width:100%;
-    height:clamp(340px,52vw,560px);
-    min-height:340px;
+    height:clamp(300px,38vw,420px);
+    min-height:280px;
     margin-top:14px;
     overflow:hidden;
     border:1px solid rgba(56,189,248,.35);
@@ -1729,5 +1729,14 @@ body.dark-mode .network-section{background:#0f172a}
 }
 .globe-enter-button:hover{background:#16446d}
 .map-hidden{display:none!important}
-@media(max-width:600px){.earth-globe{height:390px;min-height:340px;border-radius:10px}}
+@media(max-width:600px){.earth-globe{height:300px;min-height:280px;border-radius:10px}}
 @media(prefers-reduced-motion:reduce){.earth-globe{scroll-behavior:auto}}
+
+
+/* Keep supporting map panels out of the globe view; show them only after zooming into the map */
+.network-map-panel:not(.map-mode) .map-live-hud,
+.network-map-panel:not(.map-mode) .visitor-location-tools,
+.network-map-panel:not(.map-mode) .network-map-caption,
+.network-map-panel:not(.map-mode) .network-disclaimer{display:none!important}
+.earth-globe{position:relative}
+.earth-globe canvas{width:100%!important;height:100%!important}
