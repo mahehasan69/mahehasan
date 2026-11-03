@@ -456,17 +456,67 @@ if (themeBtn) {
     L.marker(home,{icon:homeIcon}).addTo(map)
         .bindPopup("<strong>Mahe's home node</strong><br>Bagha, Rajshahi, Bangladesh");
 
+    // Each route has a soft glow, a dashed signal path and a moving packet.
+    const packets = [];
     nodes.forEach((node,index) => {
-        const marker=L.circleMarker(node.coords,{
-            radius:5,weight:2,color:"#082f49",fillColor:"#67e8f9",fillOpacity:1
+        const points = [home,node.coords];
+        const routeColor = index % 2 === 0 ? "#22d3ee" : "#818cf8";
+
+        const glow = L.polyline(points,{
+            color:routeColor,weight:8,opacity:.12,lineCap:"round",
+            interactive:false
+        }).addTo(map);
+        const route = L.polyline(points,{
+            color:routeColor,weight:2.2,opacity:.9,
+            dashArray:"5 11",lineCap:"round",
+            className:"network-route-flow"
+        }).addTo(map);
+
+        const marker = L.circleMarker(node.coords,{
+            radius:5,weight:2,color:"#082f49",fillColor:"#a5f3fc",
+            fillOpacity:1,className:"network-node-pulse"
         }).addTo(map);
         marker.bindPopup("<strong>"+node.name+"</strong><br>Illustrative network endpoint");
-        const route=L.polyline([home,node.coords],{
-            color:index%2===0?"#0891b2":"#2563eb",
-            weight:2,opacity:.82,dashArray:"7 9",lineCap:"round"
-        }).addTo(map);
         route.bindTooltip("Illustrative route to "+node.name);
+
+        const packetIcon = L.divIcon({
+            className:"network-packet-marker",
+            html:'<span class="network-packet-core"></span>',
+            iconSize:[12,12],iconAnchor:[6,6]
+        });
+        const packet = L.marker(points[0],{
+            icon:packetIcon,interactive:false,keyboard:false,zIndexOffset:500
+        }).addTo(map);
+        packets.push({
+            marker:packet,
+            from:L.latLng(home[0],home[1]),
+            to:L.latLng(node.coords[0],node.coords[1]),
+            phase:(index / nodes.length) * .82,
+            speed:.000035 + (index % 3) * .000004
+        });
     });
+
+    // Animate signal packets along the illustrative paths. Pause when tab is hidden.
+    let previousFrame = 0;
+    function animateNetwork(now) {
+        if (document.hidden) {
+            previousFrame = now;
+            requestAnimationFrame(animateNetwork);
+            return;
+        }
+        const delta = previousFrame ? Math.min(now - previousFrame,50) : 16;
+        previousFrame = now;
+        packets.forEach(packet => {
+            packet.phase += packet.speed * delta;
+            if (packet.phase > 1) packet.phase -= 1;
+            const p = packet.phase;
+            const lat = packet.from.lat + (packet.to.lat - packet.from.lat) * p;
+            const lng = packet.from.lng + (packet.to.lng - packet.from.lng) * p;
+            packet.marker.setLatLng([lat,lng]);
+        });
+        requestAnimationFrame(animateNetwork);
+    }
+    requestAnimationFrame(animateNetwork);
 
     window.portfolioGlobalMap = map;
     setTimeout(() => map.invalidateSize(),250);
