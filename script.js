@@ -78,209 +78,256 @@ if (themeBtn) {
 
 
 // ===============================
-// Safe Interactive Portfolio Terminal
-// This is a portfolio demo, not a real shell.
+// Interactive Portfolio Terminal
+// A safe portfolio simulator — never executes operating-system commands.
 // ===============================
-
 (() => {
     const form = document.getElementById("terminal-form");
     const input = document.getElementById("terminal-input");
     const output = document.getElementById("terminal-output");
-
     if (!form || !input || !output) return;
 
-    const commandHelp = [
-        "Available commands:",
-        "  help       Show this command list",
-        "  whoami     A short introduction",
-        "  about      Learn about Mahe",
-        "  skills     View technical interests",
-        "  projects   List featured projects",
-        "  contact    Show contact details",
-        "  github     Open GitHub profile",
-        "  linkedin   Open LinkedIn profile",
-        "  clear      Clear the terminal"
+    const history = [];
+    let historyIndex = 0;
+    const commands = [
+        "help", "about", "whoami", "skills", "projects", "project",
+        "contact", "socials", "github", "linkedin", "email",
+        "education", "focus", "neofetch", "banner", "date", "time",
+        "pwd", "ls", "cat", "echo", "history", "clear", "theme",
+        "sudo", "man"
     ];
 
-    const responses = {
+    const projectInfo = {
+        "systemic-news": [
+            "SYSTEMIC NEWS",
+            "An automated news workflow that collects RSS stories, researches coverage and prepares structured reports.",
+            "Bot source: github.com/mahehasan69/telegram-news-bot",
+            "Website: systemicnews.new.tg"
+        ],
+        "translator": [
+            "BANGLA TRANSLATOR BOT",
+            "A Telegram translation project focused on translating messages into Bangla, with voice-output experiments.",
+            "The source repository is private."
+        ],
+        "capacity-tester": [
+            "WEBSITE CAPACITY TESTER",
+            "A controlled HTTP load-testing project for websites you own or are authorized to test.",
+            "Includes target allowlisting, test limits and performance metrics.",
+            "GitHub: github.com/mahehasan69/capacity-tester"
+        ]
+    };
+
+    const helpLines = [
+        "PORTFOLIO TERMINAL — COMMAND REFERENCE",
+        "help                  Show this command list",
+        "whoami / about        Short profile and introduction",
+        "skills                Skills and learning areas",
+        "projects              List featured projects",
+        "project <name>        Details about a project",
+        "  names: systemic-news | translator | capacity-tester",
+        "education             Education information",
+        "focus                 Current technical interests",
+        "contact / socials     Contact and social links",
+        "github / linkedin     Open a public profile",
+        "email                 Open an email draft",
+        "neofetch              Portfolio system summary",
+        "banner                Display terminal banner",
+        "date / time           Show your local date or time",
+        "pwd / ls              Explore the demo file system",
+        "cat about.txt         Read a demo text file",
+        "echo <text>           Print your own text",
+        "history               Show commands entered",
+        "theme                 Toggle the portfolio theme",
+        "clear                 Clear terminal output",
+        "man <command>         Explain a command",
+        "Tip: ↑ / ↓ command history · Tab autocomplete"
+    ];
+
+    const data = {
+        about: [
+            "I'm a programmer and cybersecurity enthusiast who enjoys learning by building.",
+            "I explore Python, Linux, automation, networking and web application security."
+        ],
         whoami: [
             "MD MAHE HASAN",
             "College student | Aspiring cybersecurity professional",
-            "Interested in Python, Linux, web security and building useful tools."
-        ],
-        about: [
-            "I'm a programmer and cybersecurity enthusiast who enjoys learning by building.",
-            "My current interests include web application security, Python automation, Linux and networking."
+            "Curious builder with an interest in secure and useful software."
         ],
         skills: [
-            "Current skills and learning areas:",
-            "• Python and automation",
-            "• Linux and command-line tools",
-            "• Networking fundamentals",
-            "• Web security and bug bounty learning",
-            "• Git and GitHub"
+            "SKILLS & LEARNING AREAS",
+            "Python and automation",
+            "Linux and command-line fundamentals",
+            "Networking fundamentals",
+            "Web security and bug bounty learning",
+            "Git, GitHub and Telegram bot development"
         ],
         projects: [
-            "Featured projects:",
-            "1. SYSTEMIC NEWS — automated news collection and publishing",
-            "2. Bangla Translator Bot — Telegram translation and voice project",
-            "3. Website Capacity Tester — controlled load testing for authorized targets",
-            "Open the Projects section for details and links."
+            "FEATURED PROJECTS",
+            "01  SYSTEMIC NEWS — automated news collection and publishing",
+            "02  Bangla Translator Bot — Telegram translation project",
+            "03  Website Capacity Tester — controlled authorized load testing",
+            "Try: project systemic-news | project translator | project capacity-tester"
+        ],
+        education: [
+            "EDUCATION",
+            "Shahdoula Government College",
+            "Class XI · Science",
+            "Bagha, Rajshahi, Bangladesh"
+        ],
+        focus: [
+            "CURRENT TECHNICAL INTERESTS",
+            "Python automation · Linux · Networking",
+            "Web application security · Bug bounty learning",
+            "Building practical tools and improving software security"
         ],
         contact: [
+            "CONTACT",
             "Email: mdmahemahe899@gmail.com",
             "GitHub: github.com/mahehasan69",
-            "LinkedIn: linkedin.com/in/md-mahe-hasan-021a73381/"
+            "LinkedIn: md-mahe-hasan"
         ],
-        help: commandHelp
+        socials: [
+            "PUBLIC PROFILES",
+            "GitHub — github.com/mahehasan69",
+            "LinkedIn — linkedin.com/in/md-mahe-hasan-021a73381/"
+        ]
     };
 
-    function addLine(text, className) {
-        const line = document.createElement("p");
-        if (className) line.className = className;
-        line.textContent = text;
-        output.appendChild(line);
+    function line(text, type = "terminal-response") {
+        const p = document.createElement("p");
+        p.className = type;
+        p.textContent = text;
+        output.appendChild(p);
+        output.scrollTop = output.scrollHeight;
     }
 
-    function runCommand(rawCommand) {
-        const command = rawCommand.trim().toLowerCase();
-        if (!command) return;
+    function lines(items, title = "terminal-response-title") {
+        items.forEach((item, i) => line(item, i === 0 ? title : "terminal-response"));
+    }
 
-        addLine("mahe@portfolio:~$ " + rawCommand, "terminal-command");
+    function openExternal(url, label) {
+        line("Opening " + label + " in a new tab…", "terminal-success");
+        window.open(url, "_blank", "noopener,noreferrer");
+    }
 
-        if (command === "clear") {
+    function run(raw) {
+        const value = raw.trim();
+        if (!value) return;
+        line("mahe@portfolio:~$ " + value, "terminal-command");
+        history.push(value);
+        historyIndex = history.length;
+
+        const parts = value.split(/\s+/);
+        const cmd = parts.shift().toLowerCase();
+        const arg = parts.join(" ").trim();
+        const lowerArg = arg.toLowerCase();
+
+        if (cmd === "clear") {
             output.replaceChildren();
             return;
         }
-
-        if (command === "github") {
-            addLine("Opening GitHub profile…", "terminal-success");
-            window.open("https://github.com/mahehasan69", "_blank", "noopener,noreferrer");
-        } else if (command === "linkedin") {
-            addLine("Opening LinkedIn profile…", "terminal-success");
-            window.open("https://www.linkedin.com/in/md-mahe-hasan-021a73381/", "_blank", "noopener,noreferrer");
-        } else if (responses[command]) {
-            responses[command].forEach((line, index) => {
-                addLine(line, index === 0 ? "terminal-result-title" : "terminal-result");
-            });
-        } else {
-            addLine("Command not found: " + command + ". Type help to see available commands.", "terminal-error");
+        if (cmd === "help" || cmd === "?") return lines(helpLines);
+        if (["about", "whoami", "skills", "projects", "education", "focus", "contact", "socials"].includes(cmd)) return lines(data[cmd]);
+        if (cmd === "project") {
+            const key = lowerArg.replace(/\s+/g, "-");
+            if (!key) return line("Usage: project <systemic-news|translator|capacity-tester>", "terminal-error");
+            if (projectInfo[key]) return lines(projectInfo[key]);
+            return line("Project not found. Try: project systemic-news", "terminal-error");
         }
-
-        output.scrollTop = output.scrollHeight;
+        if (cmd === "github") return openExternal("https://github.com/mahehasan69", "GitHub");
+        if (cmd === "linkedin") return openExternal("https://www.linkedin.com/in/md-mahe-hasan-021a73381/", "LinkedIn");
+        if (cmd === "email") return openExternal("mailto:mdmahemahe899@gmail.com", "email");
+        if (cmd === "date") return line(new Date().toLocaleDateString(undefined, { weekday:"long", year:"numeric", month:"long", day:"numeric" }), "terminal-success");
+        if (cmd === "time") return line(new Date().toLocaleTimeString(), "terminal-success");
+        if (cmd === "pwd") return line("/home/mahe/portfolio  (demo path)");
+        if (cmd === "ls") return lines(["about.txt  skills.txt  projects/  contact.txt  README.md"]);
+        if (cmd === "cat") {
+            if (lowerArg === "about.txt") return lines(["ABOUT.TXT"].concat(data.about));
+            if (lowerArg === "skills.txt") return lines(["SKILLS.TXT"].concat(data.skills));
+            if (lowerArg === "contact.txt") return lines(["CONTACT.TXT"].concat(data.contact));
+            return line("File not found. Try: cat about.txt", "terminal-error");
+        }
+        if (cmd === "echo") return line(arg || " ");
+        if (cmd === "history") {
+            if (!history.length) return line("No previous commands yet.");
+            return lines(history.map((item, i) => String(i + 1).padStart(2, "0") + "  " + item));
+        }
+        if (cmd === "banner") {
+            return lines([
+                " __  __    _    _   _ _____",
+                "|  \\/  |  / \\  | | | | ____|",
+                "| |\\/| | / _ \\ | |_| |  _|",
+                "| |  | |/ ___ \\|  _  | |___",
+                "|_|  |_/_/   \\_\\_| |_|_____",
+                "      MAHE / PORTFOLIO"
+            ]);
+        }
+        if (cmd === "neofetch") {
+            return lines([
+                "       .----.       mahe@portfolio",
+                "      / .--. \\      ----------------",
+                "     | |    | |     OS: Portfolio Demo",
+                "      \\ '--' /      Host: GitHub Pages",
+                "       '----'       Platform: " + (navigator.platform || "Web browser"),
+                "                     Language: " + navigator.language,
+                "                     Projects: 3",
+                "                     Mode: Safe simulation"
+            ]);
+        }
+        if (cmd === "theme") {
+            document.body.classList.toggle("dark-mode");
+            return line("Theme toggled for this page view.", "terminal-success");
+        }
+        if (cmd === "sudo") return line("Nice try 😄 This portfolio terminal has no administrator mode.", "terminal-error");
+        if (cmd === "man") {
+            const topic = lowerArg.split(/\s+/)[0];
+            if (!topic) return line("Usage: man <command>. Example: man project", "terminal-error");
+            const descriptions = {
+                project:"project <name> — show details for one of the featured projects.",
+                cat:"cat <file> — read a demo portfolio text file.",
+                echo:"echo <text> — print text inside this simulated terminal.",
+                theme:"theme — switch the portfolio color theme.",
+                history:"history — list commands entered during this visit.",
+                clear:"clear — remove terminal output."
+            };
+            return line(descriptions[topic] || "No manual entry for " + topic + ". Try help.", descriptions[topic] ? "terminal-response" : "terminal-error");
+        }
+        line("Command not found: " + cmd + ". Type help to see available commands.", "terminal-error");
     }
 
     form.addEventListener("submit", event => {
         event.preventDefault();
-        runCommand(input.value);
+        run(input.value);
         input.value = "";
         input.focus();
     });
 
     document.querySelectorAll(".terminal-shortcuts [data-command]").forEach(button => {
         button.addEventListener("click", () => {
-            const command = button.dataset.command || "";
-            runCommand(command);
+            run(button.dataset.command || "");
             input.focus();
         });
     });
+
+    input.addEventListener("keydown", event => {
+        if (event.key === "ArrowUp") {
+            event.preventDefault();
+            if (history.length) {
+                historyIndex = Math.max(0, historyIndex - 1);
+                input.value = history[historyIndex];
+            }
+        } else if (event.key === "ArrowDown") {
+            event.preventDefault();
+            historyIndex = Math.min(history.length, historyIndex + 1);
+            input.value = history[historyIndex] || "";
+        } else if (event.key === "Tab") {
+            const typed = input.value.trim().toLowerCase();
+            if (!typed) return;
+            const matches = commands.filter(command => command.startsWith(typed));
+            if (matches.length === 1) {
+                event.preventDefault();
+                input.value = matches[0] + " ";
+            }
+        }
+    });
 })();
-
-
-// ===============================
-// Safe Interactive Portfolio Terminal
-// ===============================
-
-const terminalForm = document.getElementById("terminal-form");
-const terminalInput = document.getElementById("terminal-input");
-const terminalOutput = document.getElementById("terminal-output");
-
-const terminalCommands = {
-    help: [
-        "Available commands:",
-        "  about     - learn about Mahe",
-        "  skills    - view technical interests",
-        "  projects  - explore selected projects",
-        "  contact   - show contact links",
-        "  clear     - clear this terminal",
-        "  whoami    - identify this portfolio"
-    ],
-    about: [
-        "MD Mahe Hasan",
-        "College student and aspiring cybersecurity professional.",
-        "Interested in Python, Linux, web security and building useful tools."
-    ],
-    skills: [
-        "TECHNICAL INTERESTS",
-        "Python | Linux | Networking fundamentals",
-        "Web security | Bug bounty learning | Git & GitHub",
-        "Automation | Telegram bot development"
-    ],
-    projects: [
-        "SELECTED PROJECTS",
-        "1. SYSTEMIC NEWS - automated news publishing",
-        "2. Bangla Translator Bot - Telegram translation project",
-        "3. Website Capacity Tester - controlled authorized load testing",
-        "Use the Projects section for links and more details."
-    ],
-    contact: [
-        "CONTACT",
-        "Email: mdmahemahe899@gmail.com",
-        "GitHub: github.com/mahehasan69",
-        "LinkedIn: linkedin.com/in/md-mahe-hasan-021a73381"
-    ],
-    whoami: [
-        "visitor@mahe-portfolio",
-        "You are exploring MD Mahe Hasan's personal portfolio.",
-        "This is a simulated portfolio terminal, not a real shell."
-    ]
-};
-
-function appendTerminalLine(text, className = "") {
-    if (!terminalOutput) return;
-    const line = document.createElement("p");
-    if (className) line.className = className;
-    line.textContent = text;
-    terminalOutput.appendChild(line);
-    terminalOutput.scrollTop = terminalOutput.scrollHeight;
-}
-
-function runPortfolioCommand(rawCommand) {
-    const command = rawCommand.trim().toLowerCase();
-    if (!command) return;
-
-    appendTerminalLine("mahe@portfolio:~$ " + rawCommand, "terminal-command");
-
-    if (command === "clear") {
-        terminalOutput.replaceChildren();
-        return;
-    }
-
-    const response = terminalCommands[command];
-    if (!response) {
-        appendTerminalLine("Command not found: " + command + ". Type 'help' to see available commands.", "terminal-error");
-        return;
-    }
-
-    response.forEach((line, index) => {
-        appendTerminalLine(line, index === 0 ? "terminal-response-title" : "terminal-response");
-    });
-}
-
-if (terminalForm && terminalInput && terminalOutput) {
-    terminalForm.addEventListener("submit", (event) => {
-        event.preventDefault();
-        runPortfolioCommand(terminalInput.value);
-        terminalInput.value = "";
-        terminalInput.focus();
-    });
-
-    document.querySelectorAll("[data-command]").forEach((button) => {
-        button.addEventListener("click", () => {
-            const command = button.dataset.command || "";
-            runPortfolioCommand(command);
-            terminalInput.value = "";
-            terminalInput.focus();
-        });
-    });
-}
