@@ -63,6 +63,40 @@
     </div>
 </header>
 
+
+<section id="terminal" class="terminal-section">
+    <div class="container">
+        <p class="section-kicker">INTERACTIVE EXPERIENCE</p>
+        <h2>Explore My Terminal</h2>
+        <p class="terminal-intro">A small command-line tour of my work, skills and interests. Try typing <code>help</code>.</p>
+
+        <div class="terminal-window" aria-label="Interactive portfolio terminal">
+            <div class="terminal-topbar">
+                <div class="terminal-dots" aria-hidden="true"><span></span><span></span><span></span></div>
+                <span class="terminal-title">mahe@portfolio: ~</span>
+                <span class="terminal-live"><i></i> ONLINE</span>
+            </div>
+            <div id="terminal-output" class="terminal-output" role="log" aria-live="polite">
+                <p class="terminal-welcome">Welcome to Mahe's portfolio terminal.</p>
+                <p>Type <strong>help</strong> to see available commands.</p>
+            </div>
+            <form id="terminal-form" class="terminal-form" autocomplete="off">
+                <label for="terminal-input" class="terminal-prompt">mahe@portfolio:~$</label>
+                <input id="terminal-input" name="command" type="text" placeholder="type a command..." spellcheck="false" autocapitalize="off" aria-label="Enter a terminal command">
+                <button type="submit" aria-label="Run command">Run ↵</button>
+            </form>
+            <div class="terminal-shortcuts" aria-label="Suggested terminal commands">
+                <button type="button" data-command="help">help</button>
+                <button type="button" data-command="about">about</button>
+                <button type="button" data-command="skills">skills</button>
+                <button type="button" data-command="projects">projects</button>
+                <button type="button" data-command="contact">contact</button>
+            </div>
+        </div>
+        <p class="terminal-footnote"><span></span> Safe demo terminal · Commands only display portfolio information; no real system commands are executed.</p>
+    </div>
+</section>
+
 <section id="about">
     <div class="container">
         <h2>About Me</h2>
