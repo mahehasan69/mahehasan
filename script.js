@@ -455,8 +455,7 @@ if (themeBtn) {
             if (altitude < 1.45) openMap([lat, lng]);
         });
 
-    // Worldwide neon network: evenly distributed light nodes and links.
-    // A modest number of elements keeps the effect smooth on mobile.
+    // Original subtle network effect: a few glowing routes from Bagha to key cities.
     const earthHub = {lat: 24.185, lng: 88.85};
     const earthNodes = [
         {name:"Dhaka",lat:23.8103,lng:90.4125},
@@ -468,62 +467,37 @@ if (themeBtn) {
         {name:"New York",lat:40.7128,lng:-74.0060},
         {name:"Sydney",lat:-33.8688,lng:151.2093}
     ];
-
-    // Fibonacci-sphere placement spreads lights over the entire visible planet.
-    const globalLights = [];
-    const lightCount = 150;
-    const goldenAngle = Math.PI * (3 - Math.sqrt(5));
-    for (let i = 0; i < lightCount; i++) {
-        const y = 1 - (i / (lightCount - 1)) * 2;
-        const radius = Math.sqrt(1 - y * y);
-        const theta = goldenAngle * i;
-        globalLights.push({
-            lat: Math.asin(y) * 180 / Math.PI,
-            lng: Math.atan2(Math.sin(theta) * radius, Math.cos(theta) * radius) * 180 / Math.PI
-        });
-    }
-
-    // Every illuminated route radiates from one origin: Bagha, Bangladesh.
-    // Destinations are spread over the whole planet to create a worldwide network effect.
-    const worldLinks = globalLights
-        .filter((point, index) => index % 2 === 0)
-        .map((point, index) => ({
-            startLat: earthHub.lat,
-            startLng: earthHub.lng,
-            endLat: point.lat,
-            endLng: point.lng,
-            color: index % 3 === 0 ? ["#22d3ee", "#67e8f9"] : ["#38bdf8", "#a5f3fc"]
-        }));
-
-    const hubLinks = earthNodes.map((node, index) => ({
+    const glowingRoutes = earthNodes.map((node, index) => ({
         startLat: earthHub.lat,
         startLng: earthHub.lng,
         endLat: node.lat,
         endLng: node.lng,
         color: index % 2 ? ["#38bdf8", "#67e8f9"] : ["#22d3ee", "#a5f3fc"]
     }));
-    const allLinks = worldLinks.concat(hubLinks);
-    const allLights = globalLights.concat([{lat:earthHub.lat,lng:earthHub.lng}, ...earthNodes]);
+    const glowingPoints = [
+        {lat: earthHub.lat, lng: earthHub.lng, name:"Bagha, Bangladesh"},
+        ...earthNodes
+    ];
 
     globe
-        .arcsData(allLinks)
+        .arcsData(glowingRoutes)
         .arcStartLat("startLat")
         .arcStartLng("startLng")
         .arcEndLat("endLat")
         .arcEndLng("endLng")
         .arcColor("color")
-        .arcAltitude(0.12)
-        .arcStroke(0.42)
-        .arcDashLength(0.18)
-        .arcDashGap(0.10)
-        .arcDashInitialGap((d, i) => (i * 0.071) % 1)
-        .arcDashAnimateTime(reducedMotion ? 0 : 3200)
-        .pointsData(allLights)
+        .arcAltitude(0.22)
+        .arcStroke(0.65)
+        .arcDashLength(0.42)
+        .arcDashGap(0.18)
+        .arcDashInitialGap((d, i) => (i * 0.137) % 1)
+        .arcDashAnimateTime(reducedMotion ? 0 : 2600)
+        .pointsData(glowingPoints)
         .pointLat("lat")
         .pointLng("lng")
-        .pointColor(() => "#8be9ff")
-        .pointAltitude(0.008)
-        .pointRadius((d) => d.lat === earthHub.lat && d.lng === earthHub.lng ? 0.32 : 0.13)
+        .pointColor(() => "#a5f3fc")
+        .pointAltitude(0.012)
+        .pointRadius(0.22)
         .pointsMerge(true);
 
     globe.width(globeEl.clientWidth).height(globeEl.clientHeight);
