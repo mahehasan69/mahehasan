@@ -504,7 +504,7 @@ if (themeBtn) {
     if (globe.controls) {
         const controls = globe.controls();
         controls.autoRotate = !reducedMotion;
-        controls.autoRotateSpeed = 2;
+        controls.autoRotateSpeed = 10;
         controls.enableDamping = true;
     }
 
