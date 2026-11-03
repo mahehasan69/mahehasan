@@ -399,3 +399,59 @@ if (themeBtn) {
         button.addEventListener("click", () => ask(button.getAttribute("data-assistant-question") || ""));
     });
 })();
+
+
+// Interactive real-world global map. Routes are illustrative, not live traffic.
+(() => {
+    const el = document.getElementById("global-network-map");
+    if (!el || typeof L === "undefined" || el.dataset.mapReady === "true") return;
+    el.dataset.mapReady = "true";
+
+    const map = L.map(el, {
+        center: [22, 35],
+        zoom: 2,
+        minZoom: 2,
+        maxZoom: 9,
+        scrollWheelZoom: false,
+        worldCopyJump: true
+    });
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener noreferrer">OpenStreetMap contributors</a>'
+    }).addTo(map);
+
+    const home = [24.185, 88.85]; // Bagha, Rajshahi, Bangladesh
+    const nodes = [
+        {name:"Dhaka, Bangladesh",coords:[23.8103,90.4125]},
+        {name:"Singapore",coords:[1.3521,103.8198]},
+        {name:"Dubai, UAE",coords:[25.2048,55.2708]},
+        {name:"London, UK",coords:[51.5072,-0.1276]},
+        {name:"Frankfurt, Germany",coords:[50.1109,8.6821]},
+        {name:"Tokyo, Japan",coords:[35.6762,139.6503]},
+        {name:"New York, USA",coords:[40.7128,-74.0060]},
+        {name:"Sydney, Australia",coords:[-33.8688,151.2093]}
+    ];
+
+    const homeIcon = L.divIcon({
+        className:"map-home-marker",
+        html:'<span class="map-home-pulse"></span><span class="map-home-core"></span>',
+        iconSize:[24,24],iconAnchor:[12,12]
+    });
+    L.marker(home,{icon:homeIcon}).addTo(map)
+        .bindPopup("<strong>Mahe's home node</strong><br>Bagha, Rajshahi, Bangladesh");
+
+    nodes.forEach((node,index) => {
+        const marker=L.circleMarker(node.coords,{
+            radius:5,weight:2,color:"#0e7490",fillColor:"#67e8f9",fillOpacity:.95
+        }).addTo(map);
+        marker.bindPopup("<strong>"+node.name+"</strong><br>Illustrative network endpoint");
+        const route=L.polyline([home,node.coords],{
+            color:index%2===0?"#0891b2":"#2563eb",
+            weight:1.5,opacity:.58,dashArray:"5 7"
+        }).addTo(map);
+        route.bindTooltip("Illustrative route to "+node.name);
+    });
+
+    setTimeout(() => map.invalidateSize(),250);
+    window.addEventListener("resize",() => map.invalidateSize());
+})();
