@@ -407,6 +407,7 @@ if (themeBtn) {
     const mapEl = document.getElementById("global-network-map");
     const openButton = document.getElementById("open-world-map");
     const hint = document.getElementById("globe-hint");
+    const panel = globeEl ? globeEl.closest(".network-map-panel") : null;
     if (!globeEl || !mapEl || typeof Globe !== "function") {
         if (globeEl) globeEl.textContent = "3D globe unavailable. Use the map below.";
         if (mapEl) mapEl.classList.remove("map-hidden");
@@ -420,6 +421,7 @@ if (themeBtn) {
     function openMap(point) {
         if (opened) return;
         opened = true;
+        if (panel) panel.classList.add("map-mode");
         globeEl.classList.add("map-hidden");
         mapEl.classList.remove("map-hidden");
         if (hint) hint.textContent = "Detailed map view · satellite and street layers";
@@ -434,6 +436,7 @@ if (themeBtn) {
     function showGlobe() {
         if (!opened) return;
         opened = false;
+        if (panel) panel.classList.remove("map-mode");
         mapEl.classList.add("map-hidden");
         globeEl.classList.remove("map-hidden");
         if (hint) hint.textContent = "🌎 Drag to rotate · Scroll or pinch to zoom in";
@@ -447,7 +450,7 @@ if (themeBtn) {
         .showAtmosphere(true)
         .atmosphereColor("#38bdf8")
         .atmosphereAltitude(0.16)
-        .pointOfView({lat: 20, lng: 35, altitude: 2.35})
+        .pointOfView({lat: 20, lng: 35, altitude: 3.8})
         .onZoom(({lat, lng, altitude}) => {
             if (altitude < 1.45) openMap([lat, lng]);
         });
