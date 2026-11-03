@@ -331,3 +331,71 @@ if (themeBtn) {
         }
     });
 })();
+
+
+// Portfolio Assistant — local FAQ preview (no external AI service connected).
+(() => {
+    const widget = document.getElementById("portfolio-assistant");
+    const toggle = document.getElementById("assistant-toggle");
+    const panel = document.getElementById("assistant-panel");
+    const close = document.getElementById("assistant-close");
+    const form = document.getElementById("assistant-form");
+    const input = document.getElementById("assistant-input");
+    const messages = document.getElementById("assistant-messages");
+    if (!widget || !toggle || !panel || !form || !input || !messages) return;
+
+    function setOpen(open) {
+        panel.hidden = !open;
+        toggle.setAttribute("aria-expanded", String(open));
+        if (open) input.focus();
+    }
+    toggle.addEventListener("click", () => setOpen(panel.hidden));
+    if (close) close.addEventListener("click", () => setOpen(false));
+    document.addEventListener("keydown", event => {
+        if (event.key === "Escape" && !panel.hidden) setOpen(false);
+    });
+
+    function addMessage(text, who) {
+        const bubble = document.createElement("p");
+        bubble.className = "assistant-bubble " + (who === "user" ? "assistant-user" : "assistant-bot");
+        bubble.textContent = text;
+        messages.appendChild(bubble);
+        messages.scrollTop = messages.scrollHeight;
+    }
+
+    function answer(question) {
+        const q = question.toLowerCase();
+        if (/project|built|work|systemic|translator|capacity/.test(q))
+            return "Mahe's featured projects:\n• SYSTEMIC NEWS — automated news collection, research and publishing to Telegram and a companion website.\n• Bangla Translator Bot — a Telegram project for translating messages into Bangla, with voice-output experiments.\n• Website Capacity Tester — controlled load testing for websites he owns or is authorized to test.\nExplore the project cards for repository links.";
+        if (/skill|technology|tech stack|program|python|linux|security/.test(q))
+            return "Mahe is learning and working with Python, Linux, networking fundamentals, web security, bug bounty research, Git and GitHub, automation, and Telegram bot development.";
+        if (/education|college|study|student/.test(q))
+            return "Mahe is a Class XI Science student at Shahdoula Government College in Bagha, Rajshahi, Bangladesh.";
+        if (/contact|email|reach|message|linkedin|github/.test(q))
+            return "Email: mdmahemahe899@gmail.com\nGitHub: github.com/mahehasan69\nLinkedIn: linkedin.com/in/md-mahe-hasan-021a73381/";
+        if (/who|about|mahe|introduce|profile/.test(q))
+            return "MD Mahe Hasan is a college student and aspiring cybersecurity professional who enjoys building practical projects and learning about Python, Linux, automation, networking, and web security.";
+        if (/goal|future|interest|focus/.test(q))
+            return "Mahe's current interests include Python automation, Linux and networking, web application security, bug bounty learning, and building useful tools.";
+        if (/hello|hi|hey/.test(q))
+            return "Hey there! 👋 Ask me about Mahe's projects, skills, education, interests, or contact details.";
+        return "I can answer questions about Mahe's projects, skills, education, interests, and contact details. Try: “Tell me about his projects”.";
+    }
+
+    function ask(question) {
+        const clean = question.trim().slice(0, 240);
+        if (!clean) return;
+        addMessage(clean, "user");
+        addMessage(answer(clean), "bot");
+    }
+
+    form.addEventListener("submit", event => {
+        event.preventDefault();
+        ask(input.value);
+        input.value = "";
+        input.focus();
+    });
+    widget.querySelectorAll("[data-assistant-question]").forEach(button => {
+        button.addEventListener("click", () => ask(button.getAttribute("data-assistant-question") || ""));
+    });
+})();
