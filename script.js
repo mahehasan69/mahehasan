@@ -453,8 +453,13 @@ if (themeBtn) {
         html:'<span class="map-home-pulse"></span><span class="map-home-core"></span>',
         iconSize:[24,24],iconAnchor:[12,12]
     });
+    const streetViewLink = (coords) =>
+        '<a class="map-street-view-link" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=' +
+        coords[0] + ',' + coords[1] +
+        '" target="_blank" rel="noopener noreferrer">Open Street View ↗</a>';
+
     L.marker(home,{icon:homeIcon}).addTo(map)
-        .bindPopup("<strong>Mahe's home node</strong><br>Bagha, Rajshahi, Bangladesh");
+        .bindPopup("<strong>Mahe's home node</strong><br>Bagha, Rajshahi, Bangladesh<br>" + streetViewLink(home));
 
     // Lightweight static routes: no continuous animation or frame loop.
     nodes.forEach((node,index) => {
@@ -472,7 +477,7 @@ if (themeBtn) {
             color:"#082f49",
             fillColor:"#a5f3fc",
             fillOpacity:1
-        }).addTo(map).bindPopup("<strong>"+node.name+"</strong><br>Illustrative network endpoint");
+        }).addTo(map).bindPopup("<strong>"+node.name+"</strong><br>Illustrative network endpoint<br>" + streetViewLink(node.coords));
         route.bindTooltip("Illustrative route to "+node.name);
     });
 
@@ -551,7 +556,7 @@ if (themeBtn) {
                 visitorMarker.setLatLng(point);
                 accuracyCircle.setLatLng(point).setRadius(accuracy);
             }
-            visitorMarker.bindPopup("<strong>Your current location</strong><br>Visible only in this browser.");
+            visitorMarker.bindPopup("<strong>Your current location</strong><br>Visible only in this browser.<br>" + '<a class="map-street-view-link" href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=' + point[0] + ',' + point[1] + '" target="_blank" rel="noopener noreferrer">Open Street View ↗</a>');
             mapInstance.setView(point, Math.max(mapInstance.getZoom(), 8), {animate: true});
             setStatus("Your location is shown on this map only. Accuracy: about " + Math.round(accuracy) + " m.");
             start.hidden = true;
